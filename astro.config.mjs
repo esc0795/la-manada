@@ -1,9 +1,9 @@
-// @ts-check
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
-
 import react from '@astrojs/react';
 
-// https://astro.build/config
 export default defineConfig({
+  site: 'https://esc0795.github.io',
+  base: '/la-manada',
   integrations: [react()]
 });
