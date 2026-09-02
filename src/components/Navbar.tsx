@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Navbar.css';
 
 interface NavbarProps {
@@ -14,6 +14,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [videoError, setVideoError] = useState(false);
+
+  // Referencias a los elementos de video para forzar autoplay silenciado en iOS WebKit
+  const navbarVideoRef = useRef<HTMLVideoElement>(null);
+  const drawerVideoRef = useRef<HTMLVideoElement>(null);
 
   // Normalizar base URL asegurando barra final
   const rawBase = import.meta.env.BASE_URL || '/';
@@ -35,6 +39,37 @@ export const Navbar: React.FC<NavbarProps> = ({
   const toggleDrawer = () => {
     setIsOpen((prev) => !prev);
   };
+
+  // Asegurar autoplay silenciado compatible con Safari iOS en el montaje inicial
+  useEffect(() => {
+    const playMedia = (el: HTMLVideoElement | null) => {
+      if (el) {
+        el.defaultMuted = true;
+        el.muted = true;
+        const promise = el.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      }
+    };
+
+    playMedia(navbarVideoRef.current);
+  }, []);
+
+  // Forzar autoplay en el video del drawer cuando este se despliega
+  useEffect(() => {
+    if (isOpen) {
+      const el = drawerVideoRef.current;
+      if (el) {
+        el.defaultMuted = true;
+        el.muted = true;
+        const promise = el.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      }
+    }
+  }, [isOpen]);
 
   // Manejar tecla Escape y bloqueo de scroll al abrir el menú lateral
   useEffect(() => {
@@ -99,12 +134,29 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               {!videoError ? (
                 <video
+                  ref={navbarVideoRef}
                   src={logoVideoSrc}
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="navbar-logo-video object-contain w-auto transition-all"
+                  // @ts-ignore Atributo para compatibilidad con Safari WebKit
+                  webkit-playsinline="true"
+                  preload="auto"
+                  controls={false}
+                  onLoadedMetadata={(e) => {
+                    const v = e.currentTarget;
+                    v.defaultMuted = true;
+                    v.muted = true;
+                    v.play().catch(() => {});
+                  }}
+                  onCanPlay={(e) => {
+                    const v = e.currentTarget;
+                    v.defaultMuted = true;
+                    v.muted = true;
+                    v.play().catch(() => {});
+                  }}
+                  className="navbar-logo-video object-contain w-auto transition-all pointer-events-none"
                   onError={() => setVideoError(true)}
                   title="La Manada - Logo Animado"
                 />
@@ -184,12 +236,29 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Emblema tipo escudo centrado que sobresale sobre la línea divisoria */}
           <div className="drawer-shield-container">
             <video
+              ref={drawerVideoRef}
               src={logoVideoSrc}
               autoPlay
               loop
               muted
               playsInline
-              className="drawer-shield-video"
+              // @ts-ignore Atributo para compatibilidad con Safari WebKit
+              webkit-playsinline="true"
+              preload="auto"
+              controls={false}
+              onLoadedMetadata={(e) => {
+                const v = e.currentTarget;
+                v.defaultMuted = true;
+                v.muted = true;
+                v.play().catch(() => {});
+              }}
+              onCanPlay={(e) => {
+                const v = e.currentTarget;
+                v.defaultMuted = true;
+                v.muted = true;
+                v.play().catch(() => {});
+              }}
+              className="drawer-shield-video pointer-events-none"
               title="La Manada - Logo Animado"
             />
           </div>

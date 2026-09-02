@@ -146,6 +146,21 @@
   border-radius: 0 0 1rem 1rem;
   display: block;
   transition: height 0.3s ease, max-height 0.3s ease;
+  pointer-events: none;
+}
+
+/* Ocultar botón nativo de play de Safari / iOS WebKit */
+.navbar-logo-video::-webkit-media-controls,
+.navbar-logo-video::-webkit-media-controls-start-playback-button,
+.navbar-logo-video::-webkit-media-controls-play-button,
+.drawer-shield-video::-webkit-media-controls,
+.drawer-shield-video::-webkit-media-controls-start-playback-button,
+.drawer-shield-video::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 @media (min-width: 640px) {
