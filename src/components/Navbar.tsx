@@ -15,7 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
-  // Referencias a los elementos de video para forzar autoplay silenciado en iOS WebKit
+  // Referencias a los elementos de video
   const navbarVideoRef = useRef<HTMLVideoElement>(null);
   const drawerVideoRef = useRef<HTMLVideoElement>(null);
 
@@ -26,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   // Rutas a los assets en public/icons/
   const pawImageSrc = `${baseUrl}icons/menu-paw.png`;
   const logoVideoSrc = encodeURI(`${baseUrl}icons/La manada logo.mp4`);
+  const logoPosterSrc = `${baseUrl}icons/logo-poster.png`;
 
   // Enlace dinámico a WhatsApp
   const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -40,34 +41,51 @@ export const Navbar: React.FC<NavbarProps> = ({
     setIsOpen((prev) => !prev);
   };
 
-  // Asegurar autoplay silenciado compatible con Safari iOS en el montaje inicial
+  // Reproducción automática de video con reanudación por interacción si hay modo ahorro activo
   useEffect(() => {
-    const playMedia = (el: HTMLVideoElement | null) => {
-      if (el) {
-        el.defaultMuted = true;
-        el.muted = true;
-        const promise = el.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
+    const playVideos = () => {
+      [navbarVideoRef.current, drawerVideoRef.current].forEach((v) => {
+        if (v) {
+          v.defaultMuted = true;
+          v.muted = true;
+          const p = v.play();
+          if (p !== undefined) {
+            p.catch(() => {});
+          }
         }
-      }
+      });
     };
 
-    playMedia(navbarVideoRef.current);
+    // Intento de autoplay silencioso inicial
+    playVideos();
+
+    // En caso de que el dispositivo esté en Modo Ahorro de Batería,
+    // el primer toque o scroll del usuario activa la reproducción de inmediato
+    const handleFirstInteraction = () => {
+      playVideos();
+      window.removeEventListener('touchstart', handleFirstInteraction);
+      window.removeEventListener('scroll', handleFirstInteraction);
+      window.removeEventListener('click', handleFirstInteraction);
+    };
+
+    window.addEventListener('touchstart', handleFirstInteraction, { passive: true, once: true });
+    window.addEventListener('scroll', handleFirstInteraction, { passive: true, once: true });
+    window.addEventListener('click', handleFirstInteraction, { passive: true, once: true });
+
+    return () => {
+      window.removeEventListener('touchstart', handleFirstInteraction);
+      window.removeEventListener('scroll', handleFirstInteraction);
+      window.removeEventListener('click', handleFirstInteraction);
+    };
   }, []);
 
-  // Forzar autoplay en el video del drawer cuando este se despliega
+  // Al abrir el drawer, asegurar que el video interno arranque sin retraso
   useEffect(() => {
-    if (isOpen) {
-      const el = drawerVideoRef.current;
-      if (el) {
-        el.defaultMuted = true;
-        el.muted = true;
-        const promise = el.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
-        }
-      }
+    if (isOpen && drawerVideoRef.current) {
+      const v = drawerVideoRef.current;
+      v.defaultMuted = true;
+      v.muted = true;
+      v.play().catch(() => {});
     }
   }, [isOpen]);
 
@@ -105,7 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         style={{ backgroundColor: '#2b694b' }}
       >
         <div className="manada-navbar-container max-w-7xl mx-auto px-4 py-2 flex items-center justify-between min-h-[4.25rem]">
-          {/* Columna Izquierda: Botón Menú con imagen de la huella canina (sin texto 'Menú') */}
+          {/* Columna Izquierda: Botón Menú con imagen de la huella canina */}
           <div className="navbar-col-left">
             <button
               type="button"
@@ -125,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Columna Centro: Logo animado MP4 centrado y responsivo */}
+          {/* Columna Centro: Logo animado MP4 de alta fidelidad, centrado y aumentado */}
           <div className="navbar-col-center">
             <a
               href={baseUrl}
@@ -136,11 +154,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <video
                   ref={navbarVideoRef}
                   src={logoVideoSrc}
+                  poster={logoPosterSrc}
                   autoPlay
                   loop
                   muted
                   playsInline
-                  // @ts-ignore Atributo para compatibilidad con Safari WebKit
+                  // @ts-ignore Atributo para Safari WebKit
                   webkit-playsinline="true"
                   preload="auto"
                   controls={false}
@@ -161,9 +180,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   title="La Manada - Logo Animado"
                 />
               ) : (
-                /* Fallback elegante con la imagen de la huella en caso de error de carga */
+                /* Fallback elegante con imagen en caso de error */
                 <span className="navbar-logo-fallback flex items-center gap-2 text-white font-black text-xl sm:text-2xl tracking-tight">
-                  <img src={pawImageSrc} alt="Logo" className="w-8 h-8 object-contain" />
+                  <img src={logoPosterSrc} alt="Logo" className="w-12 h-12 object-contain" />
                   <span>La Manada</span>
                 </span>
               )}
@@ -238,11 +257,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <video
               ref={drawerVideoRef}
               src={logoVideoSrc}
+              poster={logoPosterSrc}
               autoPlay
               loop
               muted
               playsInline
-              // @ts-ignore Atributo para compatibilidad con Safari WebKit
+              // @ts-ignore Atributo para Safari WebKit
               webkit-playsinline="true"
               preload="auto"
               controls={false}
