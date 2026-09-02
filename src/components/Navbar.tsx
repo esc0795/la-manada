@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Navbar.css';
 
 interface NavbarProps {
@@ -13,11 +13,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   whatsappMessage = "¡Hola! Me gustaría consultar sobre los servicios de guardería y hotel canino en La Manada. 🐾",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-
-  // Referencias a los elementos de video
-  const navbarVideoRef = useRef<HTMLVideoElement>(null);
-  const drawerVideoRef = useRef<HTMLVideoElement>(null);
+  const [imageError, setImageError] = useState(false);
 
   // Normalizar base URL asegurando barra final
   const rawBase = import.meta.env.BASE_URL || '/';
@@ -25,8 +21,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Rutas a los assets en public/icons/
   const pawImageSrc = `${baseUrl}icons/menu-paw.png`;
-  const logoVideoSrc = encodeURI(`${baseUrl}icons/La manada logo.mp4`);
-  const logoPosterSrc = `${baseUrl}icons/logo-poster.png`;
+  // GIF optimizado de alta fidelidad: 100% libre de distorsión y 100% inmune al Modo Ahorro
+  const logoGifSrc = encodeURI(`${baseUrl}icons/La manada logo.gif`);
 
   // Enlace dinámico a WhatsApp
   const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -40,54 +36,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const toggleDrawer = () => {
     setIsOpen((prev) => !prev);
   };
-
-  // Reproducción automática de video con reanudación por interacción si hay modo ahorro activo
-  useEffect(() => {
-    const playVideos = () => {
-      [navbarVideoRef.current, drawerVideoRef.current].forEach((v) => {
-        if (v) {
-          v.defaultMuted = true;
-          v.muted = true;
-          const p = v.play();
-          if (p !== undefined) {
-            p.catch(() => {});
-          }
-        }
-      });
-    };
-
-    // Intento de autoplay silencioso inicial
-    playVideos();
-
-    // En caso de que el dispositivo esté en Modo Ahorro de Batería,
-    // el primer toque o scroll del usuario activa la reproducción de inmediato
-    const handleFirstInteraction = () => {
-      playVideos();
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
-      window.removeEventListener('click', handleFirstInteraction);
-    };
-
-    window.addEventListener('touchstart', handleFirstInteraction, { passive: true, once: true });
-    window.addEventListener('scroll', handleFirstInteraction, { passive: true, once: true });
-    window.addEventListener('click', handleFirstInteraction, { passive: true, once: true });
-
-    return () => {
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
-      window.removeEventListener('click', handleFirstInteraction);
-    };
-  }, []);
-
-  // Al abrir el drawer, asegurar que el video interno arranque sin retraso
-  useEffect(() => {
-    if (isOpen && drawerVideoRef.current) {
-      const v = drawerVideoRef.current;
-      v.defaultMuted = true;
-      v.muted = true;
-      v.play().catch(() => {});
-    }
-  }, [isOpen]);
 
   // Manejar tecla Escape y bloqueo de scroll al abrir el menú lateral
   useEffect(() => {
@@ -143,46 +91,26 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Columna Centro: Logo animado MP4 de alta fidelidad, centrado y aumentado */}
+          {/* Columna Centro: Logo animado GIF centrado y aumentado (inmune a modo ahorro y sin distorsión) */}
           <div className="navbar-col-center">
             <a
               href={baseUrl}
               className="navbar-logo-container flex items-center justify-center"
               aria-label="La Manada - Inicio"
             >
-              {!videoError ? (
-                <video
-                  ref={navbarVideoRef}
-                  src={logoVideoSrc}
-                  poster={logoPosterSrc}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  // @ts-ignore Atributo para Safari WebKit
-                  webkit-playsinline="true"
-                  preload="auto"
-                  controls={false}
-                  onLoadedMetadata={(e) => {
-                    const v = e.currentTarget;
-                    v.defaultMuted = true;
-                    v.muted = true;
-                    v.play().catch(() => {});
-                  }}
-                  onCanPlay={(e) => {
-                    const v = e.currentTarget;
-                    v.defaultMuted = true;
-                    v.muted = true;
-                    v.play().catch(() => {});
-                  }}
-                  className="navbar-logo-video object-contain w-auto transition-all pointer-events-none"
-                  onError={() => setVideoError(true)}
-                  title="La Manada - Logo Animado"
+              {!imageError ? (
+                <img
+                  src={logoGifSrc}
+                  alt="La Manada - Logo Animado"
+                  className="navbar-logo-video object-contain w-auto transition-all"
+                  loading="eager"
+                  draggable={false}
+                  onError={() => setImageError(true)}
                 />
               ) : (
                 /* Fallback elegante con imagen en caso de error */
                 <span className="navbar-logo-fallback flex items-center gap-2 text-white font-black text-xl sm:text-2xl tracking-tight">
-                  <img src={logoPosterSrc} alt="Logo" className="w-12 h-12 object-contain" />
+                  <img src={pawImageSrc} alt="Logo" className="w-12 h-12 object-contain" />
                   <span>La Manada</span>
                 </span>
               )}
@@ -254,32 +182,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Emblema tipo escudo centrado que sobresale sobre la línea divisoria */}
           <div className="drawer-shield-container">
-            <video
-              ref={drawerVideoRef}
-              src={logoVideoSrc}
-              poster={logoPosterSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              // @ts-ignore Atributo para Safari WebKit
-              webkit-playsinline="true"
-              preload="auto"
-              controls={false}
-              onLoadedMetadata={(e) => {
-                const v = e.currentTarget;
-                v.defaultMuted = true;
-                v.muted = true;
-                v.play().catch(() => {});
-              }}
-              onCanPlay={(e) => {
-                const v = e.currentTarget;
-                v.defaultMuted = true;
-                v.muted = true;
-                v.play().catch(() => {});
-              }}
-              className="drawer-shield-video pointer-events-none"
-              title="La Manada - Logo Animado"
+            <img
+              src={logoGifSrc}
+              alt="La Manada - Logo Animado"
+              className="drawer-shield-video object-contain"
+              loading="eager"
+              draggable={false}
             />
           </div>
         </div>
