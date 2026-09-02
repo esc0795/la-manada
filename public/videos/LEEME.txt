@@ -1,0 +1,8 @@
+# Carpeta de Videos
+Ubica aquí tu archivo de video:
+- `logo.mp4`
+
+Especificaciones:
+- Fondo: `#2d6a4f` (para fundirse perfectamente con el navbar)
+- Altura sugerida: hasta 128px (se muestra con max-h-16 en el Navbar)
+- Formato: MP4 optimizado para web

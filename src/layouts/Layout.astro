@@ -1,22 +1,49 @@
+---
+import { Navbar } from "../components/Navbar.tsx";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "La Manada - Guardería & Hotel Canino",
+	description = "El segundo hogar de tu mejor amigo. Cuidado profesional, paseos, socialización y hospedaje con amor.",
+} = Astro.props;
+
+// Normalizar base URL para enlaces y assets del head
+const rawBase = import.meta.env.BASE_URL || "/";
+const baseUrl = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+const faviconUrl = `${baseUrl}favicon.svg`;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="es" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href={faviconUrl} />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="description" content={description} />
+		<title>{title}</title>
 	</head>
-	<body>
-		<slot />
+	<body class="bg-[#794d31] min-h-screen text-white antialiased m-0 flex flex-col" style="background-color: #794d31;">
+		<!-- Navegación principal persistente -->
+		<Navbar client:load />
+
+		<!-- Contenido de las páginas -->
+		<div class="flex-grow">
+			<slot />
+		</div>
 	</body>
 </html>
 
-<style>
+<style is:global>
 	html,
 	body {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		padding: 0;
+		background-color: #794d31;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 	}
 </style>

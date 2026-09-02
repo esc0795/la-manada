@@ -1,17 +1,13 @@
 ---
+import Layout from "../layouts/Layout.astro";
 import { Calculator } from "../components/Calculator.tsx";
 ---
 
-<html>
-	<head>
-		<title>La Manada - Guarderia Canina</title>
-	</head>
-	<body class="bg-gray-50 min-h-screen p-4">
-		<!-- Aquí puedes agregar el resto de tu landing page -->
-
-		<main class="py-12">
-			<!-- Se incluye la calculadora con la directiva de cliente para reactivar el JS -->
+<Layout title="La Manada - Guardería & Hotel Canino">
+	<main class="py-12 px-4 min-h-[65vh] flex items-center justify-center">
+		<!-- Calculadora oculta momentáneamente para el primer entregable al cliente -->
+		{/* <section id="calculadora" class="max-w-4xl mx-auto">
 			<Calculator client:load />
-		</main>
-	</body>
-</html>
+		</section> */}
+	</main>
+</Layout>
