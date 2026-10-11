@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 
-const WhatsAppNumber = "50600000000"; // Reemplazar con el número real
+const WhatsAppNumber = "50689561456";
 
 const TARIFA_BASE = {
     pequeno: {

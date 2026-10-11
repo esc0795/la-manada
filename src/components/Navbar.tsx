@@ -9,7 +9,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  phone = "50600000000",
+  phone = "50689561456",
   whatsappMessage = "¡Hola! Me gustaría consultar sobre los servicios de guardería y hotel canino en La Manada. 🐾",
 }) => {
   const [isOpen, setIsOpen] = useState(false);

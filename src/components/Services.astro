@@ -1,0 +1,605 @@
+---
+// Componente de Servicios de La Manada
+interface Props {
+	whatsappPhone?: string;
+}
+
+const { whatsappPhone = "50689561456" } = Astro.props;
+
+// Normalizar base URL
+const rawBase = import.meta.env.BASE_URL || "/";
+const baseUrl = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
+// Usamos hotel-guarderia-costa-rica.jpg con query de versión para garantizar que el navegador descargue la imagen fresca
+const hotelImg = `${baseUrl}images/hotel-guarderia-costa-rica.jpg?v=2`;
+const etologiaImg = `${baseUrl}images/etologia-canina.jpg`;
+
+const hotelWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
+	"¡Hola! Me gustaría conocer más detalles sobre el Hotel y Guardería Canina en La Manada.",
+)}`;
+
+const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
+	"¡Hola! Me gustaría conocer más sobre el servicio de Etología Canina y asesoría de comportamiento en La Manada.",
+)}`;
+---
+
+<section class="services-section" id="servicios">
+	<div class="services-container">
+		<!-- Encabezado de Servicios -->
+		<header class="services-header">
+			<div class="section-badge">
+				<span>Lo que ofrecemos</span>
+			</div>
+			<h2 class="services-title">
+				NUESTROS <span class="highlight-title">SERVICIOS</span>
+			</h2>
+			<p class="services-subtitle">
+				Hospedaje, amplias áreas verdes y educación científica para el
+				máximo bienestar físico y emocional de tu compañero.
+			</p>
+		</header>
+
+		<!-- Grid de las 2 Cajas de Servicios -->
+		<div class="services-grid">
+			<!-- Elemento 1: Hotel y guardería canina -->
+			<article class="service-card" id="hotel-guarderia">
+				<div class="card-media">
+					<img
+						src={hotelImg}
+						alt="Hotel y guardería canina en Costa Rica con perros felices jugando en rancho tropical y áreas verdes"
+						class="card-image"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div class="media-overlay"></div>
+					<div class="media-tag">
+						<span>Hospedaje & Guardería</span>
+					</div>
+				</div>
+
+				<div class="card-content">
+					<h3 class="card-title">Hotel y guardería canina</h3>
+					<p class="card-description">
+						Un segundo hogar seguro y divertido. Amplias áreas
+						verdes, socialización guiada, confortables zonas de
+						descanso y atención personalizada las 24 horas para que
+						tu perrito disfrute al máximo mientras estás fuera.
+					</p>
+
+					<div class="card-features">
+						<span class="feature-pill">Áreas verdes seguras</span>
+						<span class="feature-pill">Supervisión 24/7</span>
+						<span class="feature-pill">Descanso prémium</span>
+					</div>
+
+					<div class="card-action">
+						<a
+							href={hotelWhatsAppUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="btn-conocer-mas btn-hotel"
+							aria-label="Conocer más sobre Hotel y guardería canina por WhatsApp"
+						>
+							<span>Conocer más</span>
+							<svg
+								class="btn-arrow"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2.2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+								<polyline points="12 5 19 12 12 19"></polyline>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</article>
+
+			<!-- Elemento 2: Etología canina -->
+			<article class="service-card" id="etologia-canina">
+				<div class="card-media">
+					<img
+						src={etologiaImg}
+						alt="Especialista en etología canina trabajando con perro en adiestramiento positivo y comunicación"
+						class="card-image"
+						loading="lazy"
+						decoding="async"
+					/>
+					<div class="media-overlay"></div>
+					<div class="media-tag tag-etologia">
+						<span>Comportamiento Canino</span>
+					</div>
+				</div>
+
+				<div class="card-content">
+					<h3 class="card-title">Etología canina</h3>
+					<p class="card-description">
+						Comprende las emociones y la conducta de tu compañero.
+						Tratamos problemas de comportamiento, ansiedad, miedos y
+						reactividad con metodologías respetuosas y científicas
+						para fortalecer el vínculo familiar.
+					</p>
+
+					<div class="card-features">
+						<span class="feature-pill">Refuerzo positivo</span>
+						<span class="feature-pill"
+							>Diagnóstico personalizado</span
+						>
+						<span class="feature-pill">Vínculo familiar</span>
+					</div>
+
+					<div class="card-action">
+						<a
+							href={etologiaWhatsAppUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="btn-conocer-mas btn-etologia"
+							aria-label="Conocer más sobre Etología canina por WhatsApp"
+						>
+							<span>Conocer más</span>
+							<svg
+								class="btn-arrow"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2.2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+								<polyline points="12 5 19 12 12 19"></polyline>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Sección con fondo amarillo pastel cálido */
+	.services-section {
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		padding: 3.5rem 1rem 4.75rem;
+		background: linear-gradient(
+			180deg,
+			#fef9c3 0%,
+			#fef08a 50%,
+			#fde68a 100%
+		);
+		overflow: hidden;
+	}
+
+	@media (min-width: 640px) {
+		.services-section {
+			padding: 4.5rem 1.5rem 5.75rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.services-section {
+			padding: 5.5rem 2rem 6.75rem;
+		}
+	}
+
+	.services-container {
+		width: 100%;
+		max-width: 1160px;
+		margin: 0 auto;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	/* Encabezado sobre fondo amarillo pastel */
+	.services-header {
+		text-align: center;
+		width: 100%;
+		max-width: 820px;
+		margin: 0 auto 2.75rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		box-sizing: border-box;
+	}
+
+	@media (min-width: 768px) {
+		.services-header {
+			margin-bottom: 3.5rem;
+		}
+	}
+
+	.section-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.35rem 0.95rem;
+		border-radius: 9999px;
+		background: rgba(43, 105, 75, 0.15);
+		border: 1px solid rgba(43, 105, 75, 0.3);
+		color: #1e4d36;
+		font-family: var(--font-body);
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		margin-bottom: 0.85rem;
+	}
+
+	.services-title {
+		font-family:
+			"Londrina Solid", var(--font-display), cursive, sans-serif !important;
+		font-size: 2.25rem;
+		font-weight: 900;
+		line-height: 1.15;
+		color: #1e4d36;
+		margin: 0 0 0.95rem;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		text-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	}
+
+	@media (min-width: 480px) {
+		.services-title {
+			font-size: 2.75rem;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.services-title {
+			font-size: 3.35rem;
+			margin-bottom: 1.15rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.services-title {
+			font-size: 3.85rem;
+		}
+	}
+
+	.highlight-title {
+		display: inline;
+		color: #ea580c;
+		text-shadow: 0 2px 10px rgba(234, 88, 12, 0.2);
+	}
+
+	.services-subtitle {
+		font-family: var(--font-body);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #374151;
+		margin: 0;
+		max-width: 660px;
+		font-weight: 500;
+	}
+
+	@media (min-width: 640px) {
+		.services-subtitle {
+			font-size: 1.12rem;
+			line-height: 1.65;
+		}
+	}
+
+	/* Grid de las 2 cajas */
+	.services-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.75rem;
+		width: 100%;
+		max-width: 100%;
+		margin: 0 auto;
+		box-sizing: border-box;
+	}
+
+	@media (min-width: 860px) {
+		.services-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 2rem;
+		}
+	}
+
+	@media (min-width: 1100px) {
+		.services-grid {
+			gap: 2.5rem;
+		}
+	}
+
+	/* Caja de servicio: Verde prémium de La Manada */
+	.service-card {
+		background: linear-gradient(
+			175deg,
+			rgba(35, 77, 56, 0.96) 0%,
+			rgba(22, 52, 38, 0.98) 100%
+		);
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: 1.35rem;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		box-shadow:
+			0 14px 34px -4px rgba(0, 0, 0, 0.35),
+			0 4px 12px rgba(0, 0, 0, 0.18);
+		transition:
+			transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+			box-shadow 0.35s ease,
+			border-color 0.35s ease;
+		position: relative;
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	@media (min-width: 640px) {
+		.service-card {
+			border-radius: 1.5rem;
+		}
+	}
+
+	.service-card:hover {
+		transform: translateY(-6px);
+		border-color: rgba(254, 240, 138, 0.5);
+		box-shadow:
+			0 20px 42px -4px rgba(0, 0, 0, 0.42),
+			0 0 20px rgba(43, 105, 75, 0.35);
+	}
+
+	/* Media de la tarjeta */
+	.card-media {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		overflow: hidden;
+		background-color: #1a3c2c;
+	}
+
+	.card-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		display: block;
+		transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+	}
+
+	.service-card:hover .card-image {
+		transform: scale(1.05);
+	}
+
+	.media-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to top,
+			rgba(22, 52, 38, 0.88) 0%,
+			rgba(22, 52, 38, 0.15) 50%,
+			transparent 100%
+		);
+		pointer-events: none;
+	}
+
+	.media-tag {
+		position: absolute;
+		top: 0.85rem;
+		left: 0.85rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.35rem 0.8rem;
+		border-radius: 9999px;
+		background: rgba(17, 24, 39, 0.78);
+		backdrop-filter: blur(8px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		color: #ffffff;
+		font-family: var(--font-body);
+		font-size: 0.76rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+		z-index: 2;
+	}
+
+	@media (min-width: 640px) {
+		.media-tag {
+			top: 1rem;
+			left: 1rem;
+			font-size: 0.8rem;
+			padding: 0.38rem 0.85rem;
+		}
+	}
+
+	.tag-etologia {
+		background: rgba(30, 41, 59, 0.82);
+		border-color: rgba(147, 197, 253, 0.35);
+		color: #e0f2fe;
+	}
+
+	/* Contenido de la tarjeta */
+	.card-content {
+		padding: 1.35rem 1.15rem 1.65rem;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		box-sizing: border-box;
+	}
+
+	@media (min-width: 640px) {
+		.card-content {
+			padding: 1.75rem 1.6rem 2rem;
+		}
+	}
+
+	/* Título de la caja en amarillo pastel idéntico al Hero */
+	.card-title {
+		font-family:
+			"Londrina Solid", var(--font-display), cursive, sans-serif !important;
+		font-size: 1.55rem;
+		font-weight: 900;
+		color: #fef08a;
+		background: linear-gradient(
+			135deg,
+			#fffbeb 0%,
+			#fef3a1 48%,
+			#fde68a 100%
+		);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-shadow: 0 2px 14px rgba(254, 240, 138, 0.35);
+		margin: 0 0 0.75rem;
+		line-height: 1.18;
+		letter-spacing: 0.025em;
+		text-transform: uppercase;
+	}
+
+	@media (min-width: 640px) {
+		.card-title {
+			font-size: 1.8rem;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.card-title {
+			font-size: 2rem;
+		}
+	}
+
+	/* Letra pequeña: Gris claro con matices blancos */
+	.card-description {
+		font-family: var(--font-body);
+		font-size: 0.95rem;
+		line-height: 1.65;
+		color: #f1f5f9;
+		margin: 0 0 1.25rem;
+		flex-grow: 1;
+		font-weight: 400;
+	}
+
+	@media (min-width: 640px) {
+		.card-description {
+			font-size: 1rem;
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	/* Píldoras de características */
+	.card-features {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		margin-bottom: 1.5rem;
+	}
+
+	@media (min-width: 640px) {
+		.card-features {
+			gap: 0.55rem;
+			margin-bottom: 1.75rem;
+		}
+	}
+
+	.feature-pill {
+		font-family: var(--font-body);
+		display: inline-flex;
+		align-items: center;
+		padding: 0.32rem 0.75rem;
+		border-radius: 9999px;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(241, 245, 249, 0.18);
+		color: #f1f5f9;
+		font-size: 0.78rem;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+		transition:
+			background-color 0.2s ease,
+			border-color 0.2s ease;
+	}
+
+	.service-card:hover .feature-pill {
+		background: rgba(255, 255, 255, 0.14);
+		border-color: rgba(241, 245, 249, 0.35);
+		color: #ffffff;
+	}
+
+	/* Botón Conocer más en color naranja */
+	.card-action {
+		margin-top: auto;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		width: 100%;
+	}
+
+	.btn-conocer-mas {
+		font-family:
+			"Londrina Solid", var(--font-display), cursive, sans-serif !important;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: fit-content;
+		min-width: 150px;
+		max-width: 100%;
+		gap: 0.55rem;
+		padding: 0.65rem 1.45rem;
+		border-radius: 9999px;
+		font-size: 1.15rem;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+		text-decoration: none;
+		cursor: pointer;
+		transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+		background: linear-gradient(
+			135deg,
+			#f97316 0%,
+			#ea580c 50%,
+			#c2410c 100%
+		);
+		color: #ffffff;
+		border: 1px solid rgba(254, 240, 138, 0.35);
+		box-shadow: 0 4px 14px -1px rgba(234, 88, 12, 0.5);
+		user-select: none;
+		box-sizing: border-box;
+	}
+
+	@media (min-width: 640px) {
+		.btn-conocer-mas {
+			padding: 0.7rem 1.65rem;
+			font-size: 1.2rem;
+			min-width: 160px;
+		}
+	}
+
+	.btn-conocer-mas:hover {
+		background: linear-gradient(
+			135deg,
+			#fb923c 0%,
+			#f97316 50%,
+			#ea580c 100%
+		);
+		transform: translateY(-2px);
+		box-shadow:
+			0 8px 22px -2px rgba(234, 88, 12, 0.65),
+			0 0 12px rgba(254, 240, 138, 0.3);
+		border-color: rgba(254, 240, 138, 0.6);
+	}
+
+	.btn-conocer-mas:active {
+		transform: translateY(1px);
+	}
+
+	.btn-arrow {
+		width: 1.05rem;
+		height: 1.05rem;
+		transition: transform 0.25s ease;
+		flex-shrink: 0;
+	}
+
+	.btn-conocer-mas:hover .btn-arrow {
+		transform: translateX(3px);
+	}
+</style>

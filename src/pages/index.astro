@@ -1,17 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
 import WhyChooseUs from "../components/WhyChooseUs.astro";
 import { Calculator } from "../components/Calculator.tsx";
 ---
 
 <Layout title="La Manada - Hotel, Guardería & Etología Canina">
 	<main class="min-h-screen">
-		<!-- Hero Section con Hotel & Guardería y Etología Canina -->
-		<Hero />
+		<!-- Hero Section -->
+		<Hero whatsappPhone="50689561456" />
+
+		<!-- Nueva Sección de Servicios (Fondo amarillo pastel) -->
+		<Services whatsappPhone="50689561456" />
 
 		<!-- Sección: Por qué escoger La Manada -->
-		<WhyChooseUs />
+		<WhyChooseUs whatsappPhone="50689561456" />
 
 		<!-- Calculadora oculta momentáneamente para el primer entregable al cliente -->
 		{/* <section id="calculadora" class="max-w-4xl mx-auto py-12 px-4">
