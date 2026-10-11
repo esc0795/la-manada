@@ -209,14 +209,15 @@ const heroBgImg = `${baseUrl}images/hero-pets-bg.jpg`;
 		}
 	}
 
-	/* Contenedor principal de la sección Hero */
+	/* Contenedor principal de la sección Hero: Cubre el 100% de la pantalla principal (PC y móviles) */
 	.hero-section {
 		position: relative;
 		width: 100%;
 		max-width: 100%;
 		box-sizing: border-box;
-		min-height: 72vh;
-		padding: 4rem 1rem 5.5rem;
+		min-height: 100vh;
+		min-height: 100dvh;
+		padding: 6rem 1.25rem 2.5rem;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
@@ -226,15 +227,17 @@ const heroBgImg = `${baseUrl}images/hero-pets-bg.jpg`;
 
 	@media (min-width: 640px) {
 		.hero-section {
-			min-height: 76vh;
-			padding: 5rem 1.5rem 6.5rem;
+			min-height: 100vh;
+			min-height: 100dvh;
+			padding: 6.5rem 1.5rem 3rem;
 		}
 	}
 
 	@media (min-width: 1024px) {
 		.hero-section {
-			min-height: 80vh;
-			padding: 6rem 2rem 7.5rem;
+			min-height: 100vh;
+			min-height: 100dvh;
+			padding: 7.25rem 2rem 3.5rem;
 		}
 	}
 

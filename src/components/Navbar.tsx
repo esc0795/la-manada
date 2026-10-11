@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <header
-        className="manada-navbar sticky top-0 z-50 bg-[#2b694b] border-b border-black/60 shadow-md transition-colors"
+        className="manada-navbar fixed top-0 left-0 right-0 w-full z-50 bg-[#2b694b] border-b border-black/60 shadow-md transition-colors"
         style={{ backgroundColor: '#2b694b' }}
       >
         <div className="manada-navbar-container max-w-7xl mx-auto px-4 py-2 flex items-center justify-between min-h-[4.25rem]">
