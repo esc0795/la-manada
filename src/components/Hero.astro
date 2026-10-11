@@ -12,6 +12,7 @@ const baseUrl = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 
 const hotelImg = `${baseUrl}images/hotel-guarderia-canina.jpg`;
 const etologiaImg = `${baseUrl}images/etologia-canina.jpg`;
+const heroBgImg = `${baseUrl}images/hero-pets-bg.jpg`;
 
 const hotelWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
 	"¡Hola! Me gustaría conocer más detalles sobre el Hotel y Guardería Canina en La Manada."
@@ -23,6 +24,30 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 ---
 
 <section class="hero-section" id="inicio">
+	<!-- Fondo dinámico e interactivo alusivo a mascotas -->
+	<div class="dynamic-hero-bg-container" aria-hidden="true">
+		<img
+			src={heroBgImg}
+			alt="Mascotas felices jugando en La Manada resort"
+			class="dynamic-hero-bg-img"
+			loading="eager"
+			decoding="async"
+			id="hero-dynamic-bg"
+		/>
+		<div class="dynamic-bg-overlay dynamic-bg-overlay-gradient"></div>
+		<div class="dynamic-bg-overlay dynamic-bg-overlay-radial"></div>
+		<div class="dynamic-bg-overlay dynamic-bg-overlay-vignette"></div>
+
+		<!-- Elementos flotantes interactivos de huellas de mascotas -->
+		<div class="floating-paws-layer">
+			<span class="floating-paw paw-1">🐾</span>
+			<span class="floating-paw paw-2">🐾</span>
+			<span class="floating-paw paw-3">🐾</span>
+			<span class="floating-paw paw-4">🐾</span>
+			<span class="floating-paw paw-5">🐾</span>
+		</div>
+	</div>
+
 	<!-- Luces ambientales sutiles contenidas -->
 	<div class="ambient-glow ambient-glow-1" aria-hidden="true"></div>
 	<div class="ambient-glow ambient-glow-2" aria-hidden="true"></div>
@@ -30,7 +55,7 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 	<div class="hero-container">
 		<!-- Encabezado del Hero -->
 		<header class="hero-header">
-			<h1 class="hero-title">
+			<h1 class="hero-title" style="font-family: 'Londrina Solid', cursive, sans-serif;">
 				Cuidado, confort y comprensión <span class="highlight-text">para tu mejor amigo</span>
 			</h1>
 			<p class="hero-subtitle">
@@ -138,6 +163,146 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 </section>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300;400;900&display=swap');
+
+	/* Fondo dinámico de mascotas con movimiento suave */
+	.dynamic-hero-bg-container {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.dynamic-hero-bg-img {
+		position: absolute;
+		top: -5%;
+		left: -5%;
+		width: 110%;
+		height: 110%;
+		object-fit: cover;
+		object-position: center 35%;
+		will-change: transform;
+		transform: scale(1.04) translate(var(--mouse-x, 0px), var(--mouse-y, 0px));
+		transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+		animation: heroKenBurns 30s ease-in-out infinite alternate;
+		filter: brightness(0.72) saturate(1.15) contrast(1.06);
+	}
+
+	@keyframes heroKenBurns {
+		0% {
+			transform: scale(1.04) translate(0, 0);
+		}
+		50% {
+			transform: scale(1.11) translate(-1.8%, 1.2%);
+		}
+		100% {
+			transform: scale(1.06) translate(1.4%, -0.8%);
+		}
+	}
+
+	/* Capas de gradientes para asegurar legibilidad suprema */
+	.dynamic-bg-overlay {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.dynamic-bg-overlay-gradient {
+		background: linear-gradient(
+			180deg,
+			rgba(43, 105, 75, 0.68) 0%,
+			rgba(121, 77, 49, 0.76) 45%,
+			rgba(35, 23, 15, 0.92) 100%
+		);
+		mix-blend-mode: multiply;
+	}
+
+	.dynamic-bg-overlay-radial {
+		background: radial-gradient(
+			circle at 50% 25%,
+			rgba(0, 0, 0, 0.25) 0%,
+			rgba(0, 0, 0, 0.68) 70%,
+			rgba(0, 0, 0, 0.88) 100%
+		);
+	}
+
+	.dynamic-bg-overlay-vignette {
+		box-shadow: inset 0 0 120px 40px rgba(0, 0, 0, 0.65);
+	}
+
+	/* Elementos flotantes interactivos de huellitas */
+	.floating-paws-layer {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+	}
+
+	.floating-paw {
+		position: absolute;
+		opacity: 0.16;
+		user-select: none;
+		animation: floatPaw 20s ease-in-out infinite;
+	}
+
+	.paw-1 {
+		top: 14%;
+		left: 7%;
+		font-size: 1.8rem;
+		animation-duration: 22s;
+		animation-delay: 0s;
+	}
+
+	.paw-2 {
+		top: 68%;
+		left: 10%;
+		font-size: 1.4rem;
+		animation-duration: 26s;
+		animation-delay: 4s;
+	}
+
+	.paw-3 {
+		top: 22%;
+		right: 9%;
+		font-size: 2.1rem;
+		animation-duration: 24s;
+		animation-delay: 2s;
+	}
+
+	.paw-4 {
+		top: 76%;
+		right: 12%;
+		font-size: 1.5rem;
+		animation-duration: 28s;
+		animation-delay: 6s;
+	}
+
+	.paw-5 {
+		top: 48%;
+		left: 50%;
+		font-size: 1.3rem;
+		animation-duration: 30s;
+		animation-delay: 8s;
+	}
+
+	@keyframes floatPaw {
+		0% {
+			transform: translateY(0) rotate(0deg) scale(1);
+			opacity: 0.12;
+		}
+		50% {
+			transform: translateY(-28px) rotate(16deg) scale(1.12);
+			opacity: 0.22;
+		}
+		100% {
+			transform: translateY(0) rotate(0deg) scale(1);
+			opacity: 0.12;
+		}
+	}
+
 	/* Contenedor principal de la sección: centrado riguroso sin desbordes */
 	.hero-section {
 		position: relative;
@@ -222,44 +387,49 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 
 
 	.hero-title {
-		font-size: 1.75rem;
-		font-weight: 800;
-		line-height: 1.22;
+		font-family: 'Londrina Solid', cursive, sans-serif !important;
+		font-size: 2.35rem;
+		font-weight: 400;
+		line-height: 1.12;
 		color: #ffffff;
 		margin: 0 0 0.95rem;
-		letter-spacing: -0.02em;
-		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+		letter-spacing: 0.02em;
+		text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
 	}
 
 	@media (min-width: 480px) {
 		.hero-title {
-			font-size: 2.15rem;
+			font-size: 2.85rem;
 		}
 	}
 
 	@media (min-width: 768px) {
 		.hero-title {
-			font-size: 2.75rem;
+			font-size: 3.5rem;
 			margin-bottom: 1.15rem;
 		}
 	}
 
 	@media (min-width: 1024px) {
 		.hero-title {
-			font-size: 3.25rem;
+			font-size: 4.15rem;
 		}
 	}
 
 	.highlight-text {
+		font-family: inherit;
 		display: inline;
-		background: linear-gradient(135deg, #fef08a 0%, #facc15 60%, #fed7aa 100%);
+		color: #fef08a;
+		background: linear-gradient(135deg, #fffbeb 0%, #fef3a1 48%, #fde68a 100%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
+		text-shadow: 0 2px 14px rgba(254, 240, 138, 0.4);
 	}
 
 	.hero-subtitle {
-		font-size: 0.95rem;
-		line-height: 1.55;
+		font-family: var(--font-body);
+		font-size: 0.98rem;
+		line-height: 1.6;
 		color: #f1f5f9;
 		margin: 0;
 		max-width: 640px;
@@ -270,8 +440,8 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 
 	@media (min-width: 640px) {
 		.hero-subtitle {
-			font-size: 1.1rem;
-			line-height: 1.6;
+			font-size: 1.12rem;
+			line-height: 1.65;
 		}
 	}
 
@@ -406,30 +576,37 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 	}
 
 	.card-title {
-		font-size: 1.35rem;
-		font-weight: 700;
-		color: #ffffff;
+		font-family: var(--font-display);
+		font-size: 1.55rem;
+		font-weight: 900;
+		color: #fef08a;
+		background: linear-gradient(135deg, #fffbeb 0%, #fef3a1 48%, #fde68a 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-shadow: 0 2px 14px rgba(254, 240, 138, 0.35);
 		margin: 0 0 0.75rem;
-		line-height: 1.25;
-		letter-spacing: -0.01em;
+		line-height: 1.18;
+		letter-spacing: 0.025em;
+		text-transform: uppercase;
 	}
 
 	@media (min-width: 640px) {
 		.card-title {
-			font-size: 1.6rem;
+			font-size: 1.8rem;
 		}
 	}
 
 	@media (min-width: 768px) {
 		.card-title {
-			font-size: 1.75rem;
+			font-size: 2rem;
 		}
 	}
 
 	.card-description {
-		font-size: 0.92rem;
-		line-height: 1.6;
-		color: #e2e8f0;
+		font-family: var(--font-body);
+		font-size: 0.95rem;
+		line-height: 1.65;
+		color: #f1f5f9; /* Tono gris claro con matices blancos */
 		margin: 0 0 1.25rem;
 		flex-grow: 1;
 		font-weight: 400;
@@ -437,7 +614,7 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 
 	@media (min-width: 640px) {
 		.card-description {
-			font-size: 0.98rem;
+			font-size: 1rem;
 			margin-bottom: 1.5rem;
 		}
 	}
@@ -458,13 +635,14 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 	}
 
 	.feature-pill {
+		font-family: var(--font-body);
 		display: inline-flex;
 		align-items: center;
 		padding: 0.32rem 0.75rem;
 		border-radius: 9999px;
 		background: rgba(255, 255, 255, 0.08);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		color: #f1f5f9;
+		border: 1px solid rgba(241, 245, 249, 0.18);
+		color: #f1f5f9; /* Tono gris claro con matices blancos */
 		font-size: 0.78rem;
 		font-weight: 500;
 		letter-spacing: 0.01em;
@@ -486,6 +664,7 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 	}
 
 	.btn-conocer-mas {
+		font-family: var(--font-display);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -493,10 +672,11 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 		min-width: 150px;
 		max-width: 100%;
 		gap: 0.55rem;
-		padding: 0.7rem 1.4rem;
+		padding: 0.65rem 1.45rem;
 		border-radius: 9999px;
-		font-size: 0.95rem;
-		font-weight: 700;
+		font-size: 1.15rem;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
 		text-decoration: none;
 		cursor: pointer;
 		transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -508,42 +688,29 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 
 	@media (min-width: 640px) {
 		.btn-conocer-mas {
-			padding: 0.75rem 1.6rem;
-			font-size: 0.98rem;
+			padding: 0.7rem 1.65rem;
+			font-size: 1.2rem;
 			min-width: 160px;
 		}
 	}
 
-	.btn-hotel {
-		background: linear-gradient(135deg, #2b694b 0%, #1e4d36 100%);
-		color: #ffffff;
-		border-color: rgba(255, 255, 255, 0.25);
-	}
-
-	.btn-hotel:hover {
-		background: linear-gradient(135deg, #36825d 0%, #256144 100%);
-		transform: translateY(-2px);
-		box-shadow: 0 8px 20px -2px rgba(43, 105, 75, 0.6), 0 0 10px rgba(255, 255, 255, 0.2);
-		border-color: rgba(255, 255, 255, 0.45);
-	}
-
-	.btn-hotel:active {
-		transform: translateY(1px);
-	}
-
+	/* Ambos botones Conocer más en color naranja */
+	.btn-hotel,
 	.btn-etologia {
-		background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+		background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%);
 		color: #ffffff;
-		border-color: rgba(254, 240, 138, 0.3);
+		border-color: rgba(254, 240, 138, 0.35);
 	}
 
+	.btn-hotel:hover,
 	.btn-etologia:hover {
-		background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+		background: linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ea580c 100%);
 		transform: translateY(-2px);
-		box-shadow: 0 8px 20px -2px rgba(217, 119, 6, 0.55), 0 0 10px rgba(254, 240, 138, 0.25);
-		border-color: rgba(254, 240, 138, 0.5);
+		box-shadow: 0 8px 22px -2px rgba(234, 88, 12, 0.65), 0 0 12px rgba(254, 240, 138, 0.3);
+		border-color: rgba(254, 240, 138, 0.6);
 	}
 
+	.btn-hotel:active,
 	.btn-etologia:active {
 		transform: translateY(1px);
 	}
@@ -559,3 +726,36 @@ const etologiaWhatsAppUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComp
 		transform: translateX(3px);
 	}
 </style>
+
+<script>
+	// Parallax suave interactivo con el cursor del usuario
+	const heroSection = document.getElementById('inicio');
+	const dynamicBg = document.getElementById('hero-dynamic-bg');
+
+	if (heroSection && dynamicBg) {
+		let isTicking = false;
+
+		heroSection.addEventListener('mousemove', (e) => {
+			const rect = heroSection.getBoundingClientRect();
+			const x = (e.clientX - rect.left) / rect.width - 0.5;
+			const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+			const targetX = x * -22;
+			const targetY = y * -16;
+
+			if (!isTicking) {
+				window.requestAnimationFrame(() => {
+					dynamicBg.style.setProperty('--mouse-x', `${targetX}px`);
+					dynamicBg.style.setProperty('--mouse-y', `${targetY}px`);
+					isTicking = false;
+				});
+				isTicking = true;
+			}
+		});
+
+		heroSection.addEventListener('mouseleave', () => {
+			dynamicBg.style.setProperty('--mouse-x', '0px');
+			dynamicBg.style.setProperty('--mouse-y', '0px');
+		});
+	}
+</script>
