@@ -9,7 +9,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  phone = "50689561456",
+  phone = "50689531229",
   whatsappMessage = "¡Hola! Me gustaría consultar sobre los servicios de guardería y hotel canino en La Manada. 🐾",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { label: 'Inicio', href: `${baseUrl}` },
+    { label: '¿Por qué nosotros?', href: `${baseUrl}#por-que-nosotros` },
     { label: 'Servicios', href: `${baseUrl}#servicios` },
     { label: 'Calculadora de Tarifas', href: `${baseUrl}#calculadora` },
   ];
