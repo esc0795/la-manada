@@ -1,12 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
 import { Calculator } from "../components/Calculator.tsx";
 ---
 
-<Layout title="La Manada - Guardería & Hotel Canino">
-	<main class="py-12 px-4 min-h-[65vh] flex items-center justify-center">
+<Layout title="La Manada - Hotel, Guardería & Etología Canina">
+	<main class="min-h-screen">
+		<!-- Hero Section con Hotel & Guardería y Etología Canina -->
+		<Hero />
+
 		<!-- Calculadora oculta momentáneamente para el primer entregable al cliente -->
-		{/* <section id="calculadora" class="max-w-4xl mx-auto">
+		{/* <section id="calculadora" class="max-w-4xl mx-auto py-12 px-4">
 			<Calculator client:load />
 		</section> */}
 	</main>
