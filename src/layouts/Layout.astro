@@ -44,10 +44,18 @@ const appleTouchIcon = `${baseUrl}apple-touch-icon.png`;
 </html>
 
 <style is:global>
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
 	html,
 	body {
 		margin: 0;
 		padding: 0;
+		width: 100%;
+		overflow-x: hidden;
 		background-color: #794d31;
 		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 	}
